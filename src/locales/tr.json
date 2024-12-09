@@ -1,0 +1,88 @@
+{
+  "bottom": {
+    "goback": "Geri Dön",
+    "barrierFreeMenu": "Engelsiz Menü",
+    "myOrder": "Siparişim",
+    "cancelOrder": "SİPARİŞİ İPTAL ET",
+    "showBasket": "SEPETİ GÖSTER",
+    "cancelOrderConfirm": {
+      "question": "Siparişi iptal etmek istediğinize emin misiniz?",
+      "no": "VAZGEÇ",
+      "yes": "EVET"
+    },
+    "summary": {
+      "productCount": "{count} Ürün",
+      "amount": "{total} {currency}"
+    }
+  },
+  "orderTypeSelector": {
+    "selectOrderType": "SİPARİŞ TÜRÜ SEÇİNİZ",
+    "goTakeOut": "BURADA<br />YİYECEĞİM",
+    "goDelivery": "PAKET<br/>YAPTIRACAĞIM",
+    "showQrGetDiscount": "QR GÖSTER, İNDİRİM KAZAN!"
+  },
+  "menu": {
+    "addToBasket": "SEPETE<br />EKLE",
+    "modal": {
+      "direktPay": "ÖDEME YAP",
+      "addToBasket": "SEPETE EKLE",
+      "cancel": "VAZGEÇ",
+      "addNote": "NOT EKLE",
+      "editNote": "NOTU DÜZENLE",
+      "productNote": "Ürün Notu"
+    }
+  },
+  "basket": {
+    "myOrder": "Sepetim",
+    "goMenu": "MENÜYE DÖN",
+    "goPayment": "SİPARİŞİ TAMAMLA",
+    "summary": {
+      "caption": "Sipariş Özeti",
+      "subtotal": "Ara Toplam",
+      "discount": "İndirim",
+      "grandTotal": "Genel Toplam",
+      "addNote": "NOT EKLE",
+      "editNote": "NOTU DÜZENLE",
+      "orderNote": "Sipariş Notu"
+    }
+  },
+  "virtualKeyboard": {
+    "space": "Boşluk",
+    "clear": "Temizle",
+    "close": "Tamam"
+  },
+  "payment": {
+    "slogan" : "Siparişinizi vermeye çok az kaldı!",
+    "description" : "Hangi ödeme şekliyle ödemek istersiniz?",
+    "type" : {
+      "creditCard" : "KREDİ KARTI",
+      "mealCard" : "YEMEK KARTI"
+    }
+  },
+  "paymentWaiting": {
+    "title" : "Ödeme İşlemi",
+    "status" : "Ödeme Bekleniyor",
+    "description" : "Lütfen kartınızı pos cihazından çekmeyiniz",
+    "paymentTotal" : "Ödenecek Tutar",
+    "paymentSteps": {
+      "payment" : "Ödeme Bekleniyor",
+      "processing" : "İşlem Sürüyor", 
+      "success" : "Tamamlandı",
+      "error" : "Ödeme alınamadı"
+    }
+  },
+  "paymentSuccess": {
+      "goHome": "ANA EKRANA DÖN",
+      "orderSaving" : "Sipariş kaydediliyor...",
+      "orderNumber" : "SİPARİŞ NUMARASI",
+      "orderSaved" : "Siparişiniz Alındı!",
+      "orderSavedDetail" : "Siparişiniz başarıyla hazırlanmaya başlandı.",
+      "estimatedTime" : "Tahmini Hazırlanma Süresi",
+      "estimatedTimeDetail" : "15-20 dakika",
+      "orderSteps": {
+        "completed" : "Sipariş Alındı",
+        "active" : "Hazırlanıyor",
+        "ready" : "Hazır"
+      }
+  }
+}

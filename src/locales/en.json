@@ -1,0 +1,88 @@
+{
+  "bottom": {
+    "goback": "Go Back",
+    "barrierFreeMenu": "Barrier Free Menu",
+    "myOrder": "My Order",
+    "cancelOrder": "CANCEL ORDER",
+    "showBasket": "SHOW BASKET",
+    "cancelOrderConfirm": {
+      "question": "Are you sure you want to cancel the order?",
+      "no": "CANCEL",
+      "yes": "YES"
+    },
+    "summary": {
+      "productCount": "{count} Items",
+      "amount": "{total} {currency}"
+    }
+  },
+  "orderTypeSelector": {
+    "selectOrderType": "SELECT ORDER TYPE",
+    "goTakeOut": "EAT<br />HERE",
+    "goDelivery": "PACKAGE<br />MADE",
+    "showQrGetDiscount": "SHOW QR, GET DISCOUNT!"
+  },
+  "menu": {
+    "addToBasket": "ADD TO<br />BASKET",
+    "modal": {
+      "direktPay": "PAY NOW",
+      "addToBasket": "ADD TO BASKET",
+      "cancel": "CANCEL",
+      "addNote": "ADD NOTE",
+      "editNote": "EDIT NOTE",
+      "productNote": "Product Note"
+    }
+  },
+  "basket": {
+    "myOrder": "My Order",
+    "goMenu": "GO MENU",
+    "goPayment": "COMPLETE ORDER",
+    "summary": {
+      "caption": "Order Summary",
+      "subtotal": "Subtotal",
+      "discount": "Discount",
+      "grandTotal": "Grand Total",
+      "addNote": "ADD NOTE",
+      "editNote": "EDIT NOTE",
+      "orderNote": "Order Note"
+    }
+  },
+  "virtualKeyboard": {
+    "space": "Space",
+    "clear": "Clear",
+    "close": "Ok"
+  },
+  "payment": {
+    "slogan" : "There are very few days left to place your order!",
+    "description" : "Which payment method would you like to pay with?",
+    "type" : {
+      "creditCard" : "CREDIT CARD",
+      "mealCard" : "MEAL CARD"
+    }
+  },
+  "paymentWaiting": {
+    "title" : "Payment Process",
+    "status" : "Awaiting Payment",
+    "description" : "Please do not withdraw your card from the POS device.",
+    "paymentTotal" : "Amount to be Paid",
+    "paymentSteps": {
+      "payment" : "Awaiting Payment",
+      "processing" : "Process in Progress", 
+      "success" : "Completed",
+      "error" : "Payment Failed"
+    }
+  },
+  "paymentSuccess": {
+      "goHome": "GO TO MAIN SCREEN",
+      "orderSaving" : "Order Saving...",
+      "orderNumber" : "ORDER NUMBER",
+      "orderSaved" : "Your Order Has Been Received!",
+      "orderSavedDetail" : "Your order has been prepared successfully.",
+      "estimatedTime" : "Estimated Preparation Time",
+      "estimatedTimeDetail" : "15-20 minutes",
+      "orderSteps": {
+        "completed" : "Order Received",
+        "active" : "Preparing",
+        "ready" : "Ready"
+      }
+  }
+}

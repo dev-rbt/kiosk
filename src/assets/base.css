@@ -1,0 +1,20 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  user-select: none;
+  /* transition: color 0.4s, background-color 0.4s, height 0.2s ease-in, margin-top 0.4s ease-in; */
+  scroll-behavior: smooth;  
+}
+
+body {
+  color: var(--color-text);
+  background: var(--color-background);
+  line-height: 1.6;
+  font-family: "Montserrat", -apple-system, system-ui, BlinkMacSystemFont, "Helvetica Neue", "Helvetica", sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

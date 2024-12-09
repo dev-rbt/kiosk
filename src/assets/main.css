@@ -1,0 +1,42 @@
+@import "./base.css";
+
+html {
+  overflow: hidden;
+}
+
+body {
+  width: 100vw;
+}
+
+#app,
+#app > div {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+}
+
+body.impaired #app {
+  height: 60vh;
+  margin-top: 40vh;
+}
+
+a {
+  text-decoration: none;
+}
+
+.carousel {
+  box-shadow: 0px 0px 5px 3px #d962008e;
+  margin: 0.5rem 1rem 1rem 1rem;
+}
+
+.carousel,
+.carousel ul,
+.carousel ul li,
+.carousel ul li .example-slide,
+.carousel img {
+  border-radius: 1rem;
+}
+
+.carousel ul li .example-slide {
+  display: flex;
+}
