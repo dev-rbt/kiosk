@@ -1,10 +1,8 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
@@ -12,8 +10,22 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'vue': "vue/dist/vue.esm-bundler.js" 
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  optimizeDeps: {
+    include: ['vue-router', 'pinia', 'vue-i18n']
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vue-vendor': ['vue', 'vue-router', 'pinia', 'vue-i18n'],
+          'ui-components': [
+            '@lottiefiles/dotlottie-vue'
+          ]
+        }
+      }
     }
   }
 })

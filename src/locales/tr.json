@@ -15,6 +15,11 @@
       "amount": "{total} {currency}"
     }
   },
+  "intro": {
+    "menuLoading": "Menü Yükleniyor",
+    "menuError": "Menü Hatası",
+    "retryCountdownText": "{retryCountdown} saniye sonra tekrar denenecek.."
+  },
   "orderTypeSelector": {
     "selectOrderType": "SİPARİŞ TÜRÜ SEÇİNİZ",
     "goTakeOut": "BURADA<br />YİYECEĞİM",
@@ -43,7 +48,10 @@
       "grandTotal": "Genel Toplam",
       "addNote": "NOT EKLE",
       "editNote": "NOTU DÜZENLE",
-      "orderNote": "Sipariş Notu"
+      "orderNote": "Sipariş Notu",
+      "addCallNumber": "NUMARA EKLE",
+      "editCallNumber": "NUMARAYI DÜZENLE",
+      "callNumber": "Çağrı Cihazı Numarası"
     }
   },
   "virtualKeyboard": {
@@ -52,37 +60,57 @@
     "close": "Tamam"
   },
   "payment": {
-    "slogan" : "Siparişinizi vermeye çok az kaldı!",
-    "description" : "Hangi ödeme şekliyle ödemek istersiniz?",
-    "type" : {
-      "creditCard" : "KREDİ KARTI",
-      "mealCard" : "YEMEK KARTI"
+    "slogan": "Siparişinizi vermeye çok az kaldı!",
+    "description": "Hangi ödeme şekliyle ödemek istersiniz?",
+    "type": {
+      "creditCard": "KREDİ KARTI",
+      "mealCard": "YEMEK KARTI"
     }
   },
   "paymentWaiting": {
-    "title" : "Ödeme İşlemi",
-    "status" : "Ödeme Bekleniyor",
-    "description" : "Lütfen kartınızı pos cihazından çekmeyiniz",
-    "paymentTotal" : "Ödenecek Tutar",
+    "title": "Ödeme İşlemi",
+    "status": "Ödeme Bekleniyor",
+    "description": "Lütfen kartınızı pos cihazından çekmeyiniz",
+    "paymentTotal": "Ödenecek Tutar",
     "paymentSteps": {
-      "payment" : "Ödeme Bekleniyor",
-      "processing" : "İşlem Sürüyor", 
-      "success" : "Tamamlandı",
-      "error" : "Ödeme alınamadı"
+      "orderSaving": "Sipariş Kaydediliyor",
+      "orderSavingRetry": "Sipariş Tekrar Kaydediliyor",
+      "orderSaved": "Sipariş Kaydedildi",
+      "orderSaveError": "Sipariş Kaydedilemedi",
+      "orderSaveMaximumNumberOfAttemptsReached": "Maksimum deneme sayısına ulaşıldı.",
+      "orderSavingRetryMessage": "Tekrar denenecek ({retryCountdown} sn)",
+      "paymentPending": "Ödeme Bekleniyor",
+      "paymentSuccess": "Ödeme Alındı",
+      "paymentError": "Ödeme Alınırken Hata Oluştu",
+      "orderNotFound": "Sipariş Bulunamadı",
+      "processCompleted": "Tamamlandı"
+    },
+    "footer": {
+      "orderCancel": "SİPARİŞTEN VAZGEÇ",
+      "retry": "TEKRAR DENE",
+      "retrying": "TEKRAR DENENİYOR.."
     }
   },
   "paymentSuccess": {
-      "goHome": "ANA EKRANA DÖN",
-      "orderSaving" : "Sipariş kaydediliyor...",
-      "orderNumber" : "SİPARİŞ NUMARASI",
-      "orderSaved" : "Siparişiniz Alındı!",
-      "orderSavedDetail" : "Siparişiniz başarıyla hazırlanmaya başlandı.",
-      "estimatedTime" : "Tahmini Hazırlanma Süresi",
-      "estimatedTimeDetail" : "15-20 dakika",
-      "orderSteps": {
-        "completed" : "Sipariş Alındı",
-        "active" : "Hazırlanıyor",
-        "ready" : "Hazır"
-      }
+    "goHome": "ANA EKRANA DÖN",
+    "orderSaving": "Sipariş kaydediliyor...",
+    "orderNumber": "SİPARİŞ NUMARASI",
+    "orderSaved": "Siparişiniz Alındı!",
+    "orderSavedDetail": "Siparişiniz başarıyla hazırlanmaya başlandı.",
+    "estimatedTime": "Tahmini Hazırlanma Süresi",
+    "estimatedTimeDetail": "15-20 dakika",
+    "countdownText": "{countdown} saniye sonra ana sayfaya yönlendirileceksiniz..",
+    "orderSteps": {
+      "completed": "Sipariş Alındı",
+      "active": "Hazırlanıyor",
+      "ready": "Hazır"
+    }
+  },
+  "warningModal": {
+    "title": "Uyarı"
+  },
+  "warningMessages": {
+    "pleaseCompleteTheTequiredSelections": "Lütfen zorunlu seçimleri tamamlayın.",
+    "pleaseAddCallNumber" : "Lütfen çağrı cihazı numarasını ekleyin."
   }
 }

@@ -48,6 +48,9 @@
                     </span>
                   </div>
                 </div>
+                <div class="notes">
+                  {{ product.notes }}
+                </div>
               </div>
 
               <div class="item-actions">
@@ -65,11 +68,14 @@
                     <Minus v-else :width="28" :height="28" :fill="'#2d3436'" />
                   </button>
 
-                  <span class="quantity">{{ product.quantity }}</span>
+                  <span class="quantity" v-if="product.Combo == null">{{
+                    product.quantity
+                  }}</span>
 
                   <button
                     @click="setQuantityPlus(product)"
                     class="quantity-btn"
+                    v-if="product.Combo == null"
                   >
                     <Plus :width="28" :height="28" :fill="'#2d3436'" />
                   </button>
@@ -101,7 +107,7 @@
             </div>
             <div class="summary-item">
               <span>{{ $t("basket.summary.discount") }}</span>
-              <span>{{ basket.total.toFixed(2) }} TL</span>
+              <span>{{ parseInt(0).toFixed(2) }} TL</span>
             </div>
             <div class="summary-total">
               <span>{{ $t("basket.summary.grandTotal") }}</span>
@@ -112,13 +118,31 @@
               <span>{{ $t("basket.summary.orderNote") }}</span>
               <div>
                 <button @click="showKeyboard = true" class="edit-note-btn">
-                  <span v-if="!basket.notes">{{ $t("basket.summary.addNote") }}</span>
+                  <span v-if="!basket.notes">{{
+                    $t("basket.summary.addNote")
+                  }}</span>
                   <span v-else>{{ $t("basket.summary.editNote") }}</span>
                 </button>
               </div>
             </div>
-            <div>
+            <div v-if="basket.notes">
               {{ basket.notes }}
+            </div>
+            <div class="summary-total">
+              <span
+                >{{ $t("basket.summary.callNumber") }}
+                <template v-if="basket.callNumber">
+                  <b>({{ basket.callNumber }})</b>
+                </template>
+              </span>
+              <div>
+                <button @click="showNumpad = true" class="edit-note-btn">
+                  <span v-if="!basket.callNumber">{{
+                    $t("basket.summary.addCallNumber")
+                  }}</span>
+                  <span v-else>{{ $t("basket.summary.editCallNumber") }}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -148,12 +172,20 @@
         :show="showKeyboard"
         @close="showKeyboard = false"
       />
+
+      <VirtualNumpad
+        v-model="basket.callNumber"
+        :show="showNumpad"
+        @close="showNumpad = false"
+      />
+
+      <WarningModal v-model="showWarningModal" :message="warningModalMessage" />
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
 import { useApplicationStore } from "@/stores/application";
 import { storeToRefs } from "pinia";
@@ -165,13 +197,20 @@ import Trash from "../components/icons/Trash.vue";
 import ArrowLeft from "../components/icons/ArrowLeft.vue";
 import ArrowRight from "../components/icons/ArrowRight.vue";
 import VirtualKeyboard from "../components/common/VirtualKeyboard.vue";
+import VirtualNumpad from "../components/common/VirtualNumpad.vue";
+import WarningModal from "../components/common/WarningModal.vue";
+import { useI18n } from "vue-i18n";
 import "animate.css";
 
+const { t } = useI18n();
 const router = useRouter();
 const applicationStore = useApplicationStore();
 const { basket } = storeToRefs(applicationStore);
 const { updateBasketTotals, removeBasketItem } = applicationStore;
 const showKeyboard = ref(false);
+const showNumpad = ref(false);
+const showWarningModal = ref(false);
+const warningModalMessage = ref("");
 
 const setQuantityMinus = (product) => {
   if (product.quantity > 1) {
@@ -194,10 +233,24 @@ const goMenu = () => {
 };
 
 const goPayment = () => {
+  if (!isValid.value) {
+    showWarningModal.value = true;
+    return;
+  }
+
   if (basket.value.count > 0) {
     router.push({ name: "payment" });
   }
 };
+
+const isValid = computed(() => {
+  if (basket.value.callNumber == null || basket.value.callNumber == 0) {
+    warningModalMessage.value = t("warningMessages.pleaseAddCallNumber");
+    return false;
+  }
+
+  return true;
+});
 </script>
 
 <style scoped>
@@ -311,7 +364,7 @@ h1 {
   align-items: center;
   gap: 0.5rem;
   color: #636e72;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
 }
 
 .option-dot {
@@ -320,7 +373,11 @@ h1 {
   background: #ff8500;
   border-radius: 50%;
 }
-
+.notes {
+  color: #636e72;
+  font-size: 1.2rem;
+  font-style: italic;
+}
 .item-actions {
   display: flex;
   justify-content: space-between;
@@ -416,6 +473,9 @@ h1 {
   color: #ff8500;
   padding-top: 1rem;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.summary-total b {
+  color: #fff;
 }
 
 .basket-footer {

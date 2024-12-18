@@ -24,19 +24,3 @@ a {
   text-decoration: none;
 }
 
-.carousel {
-  box-shadow: 0px 0px 5px 3px #d962008e;
-  margin: 0.5rem 1rem 1rem 1rem;
-}
-
-.carousel,
-.carousel ul,
-.carousel ul li,
-.carousel ul li .example-slide,
-.carousel img {
-  border-radius: 1rem;
-}
-
-.carousel ul li .example-slide {
-  display: flex;
-}

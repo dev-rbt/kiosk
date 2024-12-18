@@ -68,9 +68,11 @@ const modifiers = menuStore.getModifiers();
 
 onMounted(() => {
   const firstGroup = groups[0];
-  selectedGroup.value = firstGroup;
 
-  setTimeout(calculateHeights, 500);
+  if (firstGroup != null)
+    selectedGroup.value = firstGroup;
+
+  setInterval(()=>{calculateHeights()}, 1000);
 });
 
 watch(impairedActive, () => {
@@ -86,8 +88,20 @@ const setSelectedProduct = (product) => {
   modalIsOpen.value = true;
 };
 
-const handleAddToBasket = ({ product, selectedItems, withPayment, totalPrice, notes }) => {
-  addToBasket(selectedProduct.value, selectedItems, orderType, totalPrice, notes);
+const handleAddToBasket = ({
+  product,
+  selectedItems,
+  withPayment,
+  totalPrice,
+  notes,
+}) => {
+  addToBasket(
+    selectedProduct.value,
+    selectedItems,
+    orderType,
+    totalPrice,
+    notes
+  );
 
   if (withPayment) {
     router.push({ name: "payment" });
@@ -95,10 +109,11 @@ const handleAddToBasket = ({ product, selectedItems, withPayment, totalPrice, no
 };
 
 const calculateHeights = () => {
+
   if (
     header.value?.logo &&
     header.value?.carousel &&
-    items.value?.menuCaption
+    items.value?.menuCaption?.el
   ) {
     const app = document.getElementById("app");
     const appStyle = getComputedStyle(app);
@@ -110,7 +125,7 @@ const calculateHeights = () => {
 
     const logoHeight = header.value.logo.clientHeight;
     const carouselHeight = header.value.carousel.clientHeight;
-    const menuCaptionHeight = items.value.menuCaption.clientHeight;
+    const menuCaptionHeight = items.value.menuCaption?.el?.clientHeight;
 
     const totalHeight =
       logoHeight +
@@ -119,6 +134,7 @@ const calculateHeights = () => {
       bottomNavHeight +
       appMarginTop +
       20;
+
 
     if (items.value?.menuContent) {
       items.value.menuContent.style.height = `calc(100vh - ${totalHeight}px)`;

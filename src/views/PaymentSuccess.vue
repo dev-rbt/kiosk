@@ -1,18 +1,5 @@
 <template>
-  <div v-if="isLoading" class="full-screen-loading">
-    <div class="loading-content">
-      <DotLottieVue
-        class="loading-animation"
-        autoplay
-        loop
-        :data="LoadingAnimation"
-      />
-      <div class="loading-text">
-        {{ $t("paymentSuccess.orderSaving") }}
-      </div>
-    </div>
-  </div>
-  <div v-else class="payment-success">
+  <div class="payment-success">
     <div class="logo">
       <Logo :width="200" />
     </div>
@@ -90,45 +77,48 @@
         </div>
         <div class="button-shine"></div>
       </button>
+
+      <div class="countdown animate__animated animate__fadeInUp">
+        {{ $t("paymentSuccess.countdownText", { countdown }) }}
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
 import PaymentSuccess from "../assets/img/payment-success.json";
-import LoadingAnimation from "@/assets/img/loading.json";
 import Logo from "../components/icons/Logo.vue";
 import Clock from "../components/icons/Clock.vue";
 import Chef from "../components/icons/Chef.vue";
 import Bag from "../components/icons/Bag.vue";
 import Home from "../components/icons/Home.vue";
 import { DotLottieVue } from "@lottiefiles/dotlottie-vue";
-import { onMounted, toRaw, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
 import { useApplicationStore } from "@/stores/application";
-import { storeToRefs } from "pinia";
-import { apiService } from "@/services/api.service";
-import { useRouter } from "vue-router";
+import { ref, onMounted, onUnmounted } from "vue";
 import "animate.css";
 
 const router = useRouter();
+const route = useRoute();
 const applicationStore = useApplicationStore();
 const { orderCancelConfirmOk } = applicationStore;
-const { basket } = storeToRefs(applicationStore);
-const isLoading = ref(true);
-const orderId = ref(0);
+const orderId = route.query.orderId;
+const countdown = ref(15);
+let timer;
 
-onMounted(async () => {
-  const basketJsonBody = toRaw(basket.value);
-  console.log(basket.value);
+onMounted(() => {
+  timer = setInterval(() => {
+    countdown.value--;
+    if (countdown.value <= 0) {
+      clearInterval(timer);
+      goIntro();
+    }
+  }, 1000);
+});
 
-  const data = await apiService.saveSaleOrder(basketJsonBody);
-
-  isLoading.value = false;
-
-  if (data.Status == true) {
-    orderId.value = data.OrderId;
-  } else {
-    alert(data.Message);
+onUnmounted(() => {
+  if (timer) {
+    clearInterval(timer);
   }
 });
 
@@ -200,7 +190,7 @@ const goIntro = () => {
   color: #2d3436;
   margin-bottom: 0.5rem;
   background: linear-gradient(45deg, #ff8500, #ff6f00);
-  -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -404,51 +394,11 @@ const goIntro = () => {
   transform: rotate(45deg) translate(50%, 50%);
 }
 
-.full-screen-loading {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.98);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(5px);
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
-}
-
-.loading-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-}
-
-.loading-animation {
-  width: 300px;
-  height: 300px;
-}
-
-.loading-text {
-  font-size: 200%;
-  font-weight: 600;
-  color: #333;
+.countdown {
+  margin-top: 1rem;
+  color: #636e72;
+  font-size: 1rem;
   text-align: center;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    opacity: 0.6;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.6;
-  }
 }
 
 @media (max-width: 768px) {

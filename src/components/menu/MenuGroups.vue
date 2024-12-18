@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-
 import { ref } from 'vue'
 
 const props = defineProps({
@@ -28,7 +27,6 @@ const menuGroups = ref(null)
 
 defineEmits(['select-group'])
 defineExpose({ menuGroups })
-
 </script>
 
 <style scoped>

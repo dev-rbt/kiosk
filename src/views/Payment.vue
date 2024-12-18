@@ -15,32 +15,44 @@
           <span>{{ $t("payment.description") }}</span>
         </div>
 
-        <div class="price-cards">
-          <div
-            class="price-card main-price animate__animated animate__fadeInLeft"
-          >
-            <div class="currency-icon">₺</div>
-            <div class="amount">{{ basket.total.toFixed(2) }}</div>
-          </div>
-
-          <div class="price-card animate__animated animate__fadeInUp">
-            <div class="currency-icon">$</div>
-            <div class="amount">
-              {{ (basket.total / exchange.USD).toFixed(2) }}
+        <div class="price-display">
+          <div class="main-price animate__animated animate__fadeInUp">
+            <div class="price-content">
+              <div class="currency-symbol">₺</div>
+              <div class="amount">{{ basket.total.toFixed(2) }}</div>
             </div>
+            <div class="price-glow"></div>
           </div>
 
-          <div class="price-card animate__animated animate__fadeInRight">
-            <div class="currency-icon">€</div>
-            <div class="amount">
-              {{ (basket.total / exchange.EUR).toFixed(2) }}
+          <div class="other-currencies">
+            <div class="currency-card animate__animated animate__fadeInLeft">
+              <div class="card-content">
+                <div class="currency-info">
+                  <span class="symbol">$</span>
+                  <span class="amount">{{ (basket.total / exchange.USD).toFixed(2) }}</span>
+                </div>
+                <div class="label">USD</div>
+              </div>
             </div>
-          </div>
 
-          <div class="price-card animate__animated animate__fadeInRight">
-            <div class="currency-icon">£</div>
-            <div class="amount">
-              {{ (basket.total / exchange.GBP).toFixed(2) }}
+            <div class="currency-card animate__animated animate__fadeInUp">
+              <div class="card-content">
+                <div class="currency-info">
+                  <span class="symbol">€</span>
+                  <span class="amount">{{ (basket.total / exchange.EUR).toFixed(2) }}</span>
+                </div>
+                <div class="label">EUR</div>
+              </div>
+            </div>
+
+            <div class="currency-card animate__animated animate__fadeInRight">
+              <div class="card-content">
+                <div class="currency-info">
+                  <span class="symbol">£</span>
+                  <span class="amount">{{ (basket.total / exchange.GBP).toFixed(2) }}</span>
+                </div>
+                <div class="label">GBP</div>
+              </div>
             </div>
           </div>
         </div>
@@ -91,64 +103,6 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useApplicationStore } from "@/stores/application";
-import { useMenuStore } from "@/stores/menu";
-import { storeToRefs } from "pinia";
-import { apiService } from "@/services/api.service";
-
-import Logo from "../components/icons/Logo.vue";
-import CreditCard from "../components/icons/CreditCard.vue";
-import MealCard from "../components/icons/MealCard.vue";
-import Metropolcard from "../components/icons/brands/Metropolcard.vue";
-import Multinet from "../components/icons/brands/Multinet.vue";
-import Pluxee from "../components/icons/brands/Pluxee.vue";
-import Setcard from "../components/icons/brands/Setcard.vue";
-
-const router = useRouter();
-const applicationStore = useApplicationStore();
-const { basket } = storeToRefs(applicationStore);
-
-const showMealPaymentTypes = ref(false);
-
-const menuStore = useMenuStore();
-const exchange = menuStore.getExchange();
-const paymentMethods = menuStore.getPaymentMethods();
-
-const mealOptions = computed(() => {
-  const mealCardPayments = paymentMethods.filter(
-    (pm) => pm.Type === "MEAL_CARD"
-  );
-  const baseOptions = [
-    { component: Metropolcard, type: "METROPOLCARD" },
-    { component: Multinet, type: "MULTINET" },
-    { component: Pluxee, type: "SODEXO" },
-    { component: Pluxee, type: "PLUXEE" },
-    { component: Setcard, type: "SETCARD" },
-  ];
-
-  return baseOptions.filter((option) =>
-    mealCardPayments.some((payment) => payment.Name === option.type)
-  );
-});
-
-const goPaymentWaiting = async (type) => {
-  basket.value.paymentType = type;
-
-  var paymentMethod = paymentMethods.find((payment) => payment.Name === type);
-
-  basket.value.paymentMethod = paymentMethod;
-
-  router.push({ name: "payment-waiting" });
-};
-
-const toggleMealOptions = () => {
-  showMealPaymentTypes.value = !showMealPaymentTypes.value;
-};
-</script>
 
 <style scoped>
 .payment {
@@ -220,84 +174,106 @@ const toggleMealOptions = () => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.8),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
   animation: shine 2s infinite;
 }
 
-@keyframes shine {
-  to {
-    left: 100%;
-  }
-}
-
-.price-cards {
+.price-display {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
-.price-card {
+.main-price {
+  background: linear-gradient(135deg, #ff8f00, #ff6f00);
+  padding: 2rem 3rem;
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(255, 143, 0, 0.3);
+  transform: scale(1.1);
+}
+
+.price-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.currency-symbol {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.main-price .amount {
+  font-size: 4rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.price-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), transparent 70%);
+  animation: rotate 4s linear infinite;
+}
+
+.other-currencies {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.currency-card {
   background: white;
   padding: 1.5rem 2rem;
   border-radius: 15px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  min-width: 200px;
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
 }
 
-.price-card.main-price {
-  transform: scale(1.2);
-  background: linear-gradient(135deg, #ff8f00, #ff6f00);
-  box-shadow: 0 15px 30px rgba(255, 143, 0, 0.2);
+.currency-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
-.price-card.main-price .currency-icon,
-.price-card.main-price .amount,
-.price-card.main-price .currency {
-  color: white;
+.card-content {
+  position: relative;
+  z-index: 1;
 }
 
-.price-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background: linear-gradient(90deg, #ff8f00, #ff6f00);
+.currency-info {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
-.currency-icon {
-  font-size: 2rem;
+.currency-card .symbol {
+  font-size: 1.5rem;
   font-weight: 700;
-  color: #ff8f00;
+  color: #2c3e50;
 }
 
-.amount {
-  font-size: 2.5rem;
+.currency-card .amount {
+  font-size: 2rem;
   font-weight: 800;
   color: #2c3e50;
 }
 
-.main-price .amount {
-  font-size: 3rem;
-}
-
-.currency {
-  font-size: 1.2rem;
-  font-weight: 600;
+.currency-card .label {
+  font-size: 1rem;
   color: #7f8c8d;
+  font-weight: 600;
 }
 
 .payment-options {
@@ -348,12 +324,7 @@ const toggleMealOptions = () => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
   transition: 0.5s;
 }
 
@@ -408,18 +379,28 @@ const toggleMealOptions = () => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
   animation: shine-effect 2s infinite;
 }
 
 @keyframes shine-effect {
   to {
     left: 100%;
+  }
+}
+
+@keyframes shine {
+  to {
+    left: 100%;
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -434,14 +415,30 @@ const toggleMealOptions = () => {
 }
 
 @media (max-width: 768px) {
-  .price-cards {
+  .payment-content {
+    padding: 1rem;
+  }
+
+  .main-price {
+    padding: 1.5rem;
+    width: 90%;
+  }
+
+  .main-price .amount {
+    font-size: 3rem;
+  }
+
+  .currency-symbol {
+    font-size: 2rem;
+  }
+
+  .other-currencies {
     flex-direction: column;
     align-items: center;
   }
 
-  .price-card {
-    width: 100%;
-    max-width: 300px;
+  .currency-card {
+    width: 90%;
   }
 
   .payment-options {
@@ -450,8 +447,62 @@ const toggleMealOptions = () => {
   }
 
   .payment-button {
-    width: 100%;
-    max-width: 300px;
+    width: 90%;
   }
 }
 </style>
+
+<script setup>
+import { ref, computed } from "vue";
+import { useRouter } from "vue-router";
+import { useApplicationStore } from "@/stores/application";
+import { useMenuStore } from "@/stores/menu";
+import { storeToRefs } from "pinia";
+
+import Logo from "../components/icons/Logo.vue";
+import CreditCard from "../components/icons/CreditCard.vue";
+import MealCard from "../components/icons/MealCard.vue";
+import Metropolcard from "../components/icons/brands/Metropolcard.vue";
+import Multinet from "../components/icons/brands/Multinet.vue";
+import Pluxee from "../components/icons/brands/Pluxee.vue";
+import Setcard from "../components/icons/brands/Setcard.vue";
+
+const router = useRouter();
+const applicationStore = useApplicationStore();
+const { basket } = storeToRefs(applicationStore);
+
+const showMealPaymentTypes = ref(false);
+
+const menuStore = useMenuStore();
+const exchange = menuStore.getExchange();
+const paymentMethods = menuStore.getPaymentMethods();
+
+const mealOptions = computed(() => {
+  const mealCardPayments = paymentMethods.filter(
+    (pm) => pm.Type === "MEAL_CARD"
+  );
+  const baseOptions = [
+    { component: Metropolcard, type: "METROPOLCARD" },
+    { component: Multinet, type: "MULTINET" },
+    { component: Pluxee, type: "SODEXO" },
+    { component: Pluxee, type: "PLUXEE" },
+    { component: Setcard, type: "SETCARD" },
+  ];
+
+  return baseOptions.filter((option) =>
+    mealCardPayments.some((payment) => payment.Name === option.type)
+  );
+});
+
+const goPaymentWaiting = async (type) => {
+  basket.value.paymentType = type;
+  var paymentMethod = paymentMethods.find((payment) => payment.Name === type);
+  basket.value.paymentMethod = paymentMethod;
+  router.push({ name: "payment-waiting" });
+};
+
+const toggleMealOptions = () => {
+  showMealPaymentTypes.value = !showMealPaymentTypes.value;
+};
+</script>
+```

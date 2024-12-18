@@ -5,7 +5,7 @@ export const useApplicationStore = defineStore('applicationStore', () => {
   const impairedActive = ref(false)
   const basketIsOpen = ref(false) // Varsayılan olarak kapalı
   const orderCancelConfirmIsOpen = ref(false)
-  const basket = ref({ count: 0, total: 0, notes: null, products: [] })
+  const basket = ref({ count: 0, total: 0, notes: null, callNumber: null, products: [] })
 
   const impairedToggle = () => {
     impairedActive.value = !impairedActive.value

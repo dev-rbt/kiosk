@@ -1,59 +1,53 @@
-import { defineStore } from 'pinia';
-import { apiService } from '@/services/api.service';
-import { ref } from 'vue'
+import { defineStore } from "pinia";
+import { apiService } from "@/services/api.service";
+import { ref } from "vue";
 
-export const useMenuStore = defineStore('menu', () => {
-    const menuData = ref([])
-    const menu = ref([])
-    const modifiers = ref([])
-    const exchange = ref({})
-    const paymentMethods = ref([])
-    const loading = ref(false)
-    const error = ref('')
+export const useMenuStore = defineStore("menu", () => {
+  const menuData = ref([]);
+  const menu = ref([]);
+  const modifiers = ref([]);
+  const exchange = ref({});
+  const paymentMethods = ref([]);
 
-    const fetchMenu = async () => {
+  const fetchMenu = async () => {
 
-        loading.value = true;
-        error.value = null;
+      const menuLastUpdateDateTime = getMenuLastUpdateDateTime();
 
-        try {
-            const data = await apiService.getKioskMenuData()
+      const data = await apiService.getKioskMenuData(menuLastUpdateDateTime);
 
-            menuData.value = data
-            menu.value = data.Menu
-            modifiers.value = data.Modifiers
-            exchange.value = data.Exchange
-            paymentMethods.value = data.PaymentMethods
+      // Tarih eşit değilse verileri tekrar al
+      if (menuLastUpdateDateTime !== data.MenuLastUpdateDateTime) {
+        menuData.value = data;
+        menu.value = data.Menu;
+        modifiers.value = data.Modifiers;
+        exchange.value = data.Exchange;
+        paymentMethods.value = data.PaymentMethods;
 
-            localStorage.setItem('menu', JSON.stringify(data))
-        } catch (error) {
-            error.value = error.message;
-            console.error('Store error:', error);
-        } finally {
-            loading.value = false;
-        }
+        localStorage.setItem("menu", JSON.stringify(data));
+      }
+  };
 
-    }
+  const getMenu = () => JSON.parse(localStorage.getItem("menu") ?? "{}").Menu;
+  const getModifiers = () =>
+    JSON.parse(localStorage.getItem("menu") ?? "{}").Modifiers;
+  const getExchange = () =>
+    JSON.parse(localStorage.getItem("menu") ?? "{}").Exchange;
+  const getPaymentMethods = () =>
+    JSON.parse(localStorage.getItem("menu") ?? "{}").PaymentMethods;
+  const getMenuLastUpdateDateTime = () =>
+    JSON.parse(localStorage.getItem("menu") ?? "{}")?.MenuLastUpdateDateTime ?? "2000-01-01";
 
-    const getMenu = () => JSON.parse(localStorage.getItem('menu')).Menu
-    const getModifiers = () => JSON.parse(localStorage.getItem('menu')).Modifiers
-    const getExchange = () => JSON.parse(localStorage.getItem('menu')).Exchange
-    const getPaymentMethods = () => JSON.parse(localStorage.getItem('menu')).PaymentMethods
+  return {
+    menuData,
+    menu,
+    modifiers,
+    exchange,
+    paymentMethods,
 
-    return { 
-        menuData,
-        menu,
-        modifiers,
-        exchange,
-        paymentMethods,
-
-        loading,
-        error,
-        
-        fetchMenu,
-        getMenu,
-        getModifiers,
-        getExchange,
-        getPaymentMethods
-    }
-})
+    fetchMenu,
+    getMenu,
+    getModifiers,
+    getExchange,
+    getPaymentMethods,
+  };
+});

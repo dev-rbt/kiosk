@@ -3,30 +3,41 @@
     <Logo :width="200" />
   </div>
 
-  <div ref="carousel" class="carousel" v-show="!impairedActive">
-    <vue-carousel :data="slider" :controls="false" :slideOnSwipe="true"></vue-carousel>
+  <div ref="carousel" class="carousel-area" v-show="!impairedActive">
+    <CustomCarousel
+      :slides="sliders"
+      :slides-to-show="1"
+      :loop="true"
+      :autoplay-interval="5000"
+    >
+      <template v-for="(slide, index) in sliders" :key="index" #[`slide-${index}`]>
+        <div v-html="slide"></div>
+      </template>
+    </CustomCarousel>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import Logo from '../icons/Logo.vue'
-import VueCarousel from '@chenfengyuan/vue-carousel'
-import { storeToRefs } from 'pinia'
-import { useApplicationStore } from '@/stores/application'
+import { onMounted, ref } from "vue";
+import Logo from "../icons/Logo.vue";
+import CustomCarousel from "../common/CustomCarousel.vue";
+import { storeToRefs } from "pinia";
+import { useApplicationStore } from "@/stores/application";
 
-const applicationStore = useApplicationStore()
-const { impairedActive } = storeToRefs(applicationStore)
+const applicationStore = useApplicationStore();
+const { impairedActive } = storeToRefs(applicationStore);
 
-const logo = ref(null)
-const carousel = ref(null)
+const logo = ref(null);
+const carousel = ref(null);
 
-const slider = ref([
-  '<div class="example-slide"><img src="/assets/slider/slider1.jpg" style="height:auto; width:100%;" /></div>',
-  '<div class="example-slide"><img src="/assets/slider/slider2.jpg" style="height:auto; width:100%;"  /></div>'
-])
+const sliders = ref([
+  '<img src="/assets/slider/slider1.jpg"  />',
+  '<img src="/assets/slider/slider2.jpg"  />',
+  '<img src="/assets/slider/slider2.jpg"  />',
+  '<img src="/assets/slider/slider2.jpg"  />',
+]);
 
-defineExpose({ logo, carousel })
+defineExpose({ logo, carousel });
 </script>
 
 <style scoped>
@@ -41,7 +52,5 @@ defineExpose({ logo, carousel })
   margin: 1rem 0;
 }
 
-.carousel {
-  flex: 2;
-}
+
 </style>

@@ -15,6 +15,11 @@
       "amount": "{total} {currency}"
     }
   },
+  "intro": {
+    "menuLoading": "Menu Loading..",
+    "menuError": "Menu Error",
+    "retryCountdownText": "Will try again in {retryCountdown} second.."
+  },
   "orderTypeSelector": {
     "selectOrderType": "SELECT ORDER TYPE",
     "goTakeOut": "EAT<br />HERE",
@@ -43,7 +48,10 @@
       "grandTotal": "Grand Total",
       "addNote": "ADD NOTE",
       "editNote": "EDIT NOTE",
-      "orderNote": "Order Note"
+      "orderNote": "Order Note",
+      "addCallNumber" : "ADD NUMBER",
+      "editCallNumber" : "EDIT NUMBER",
+      "callNumber" : "Call Device Number"
     }
   },
   "virtualKeyboard": {
@@ -52,37 +60,57 @@
     "close": "Ok"
   },
   "payment": {
-    "slogan" : "There are very few days left to place your order!",
-    "description" : "Which payment method would you like to pay with?",
-    "type" : {
-      "creditCard" : "CREDIT CARD",
-      "mealCard" : "MEAL CARD"
+    "slogan": "There are very few days left to place your order!",
+    "description": "Which payment method would you like to pay with?",
+    "type": {
+      "creditCard": "CREDIT CARD",
+      "mealCard": "MEAL CARD"
     }
   },
   "paymentWaiting": {
-    "title" : "Payment Process",
-    "status" : "Awaiting Payment",
-    "description" : "Please do not withdraw your card from the POS device.",
-    "paymentTotal" : "Amount to be Paid",
+    "title": "Payment Process",
+    "status": "Awaiting Payment",
+    "description": "Please do not withdraw your card from the POS device.",
+    "paymentTotal": "Amount to be Paid",
     "paymentSteps": {
-      "payment" : "Awaiting Payment",
-      "processing" : "Process in Progress", 
-      "success" : "Completed",
-      "error" : "Payment Failed"
+      "orderSaving": "Order Saving",
+      "orderSavingRetry": "Order Resaving",
+      "orderSaved": "Order Saved",
+      "orderSaveError": "Order Could Not Be Saved",
+      "orderSaveMaximumNumberOfAttemptsReached": "Maximum number of attempts reached.",
+      "orderSavingRetryMessage": "Will be retried ({retryCountdown} sec)",
+      "paymentPending": "Payment Pending",
+      "paymentSuccess": "Payment Received",
+      "paymentError": "Error While Receiving Payment",
+      "orderNotFound": "Order Not Found",
+      "processCompleted": "Completed"
+    },
+    "footer": {
+      "orderCancel": "ORDER CANCEL",
+      "retry": "TRY SAVING AGAIN",
+      "retrying": "TRYING TO SAVE AGAIN.."
     }
   },
   "paymentSuccess": {
-      "goHome": "GO TO MAIN SCREEN",
-      "orderSaving" : "Order Saving...",
-      "orderNumber" : "ORDER NUMBER",
-      "orderSaved" : "Your Order Has Been Received!",
-      "orderSavedDetail" : "Your order has been prepared successfully.",
-      "estimatedTime" : "Estimated Preparation Time",
-      "estimatedTimeDetail" : "15-20 minutes",
-      "orderSteps": {
-        "completed" : "Order Received",
-        "active" : "Preparing",
-        "ready" : "Ready"
-      }
+    "goHome": "GO TO MAIN SCREEN",
+    "orderSaving": "Order Saving...",
+    "orderNumber": "ORDER NUMBER",
+    "orderSaved": "Your Order Has Been Received!",
+    "orderSavedDetail": "Your order has been prepared successfully.",
+    "estimatedTime": "Estimated Preparation Time",
+    "estimatedTimeDetail": "15-20 minutes",
+    "countdownText": "You will be directed to the home page after {countdown} seconds.",
+    "orderSteps": {
+      "completed": "Order Received",
+      "active": "Preparing",
+      "ready": "Ready"
+    }
+  },
+  "warningModal": {
+    "title": "Warning"
+  },
+  "warningMessages" : {
+    "pleaseCompleteTheTequiredSelections" : "Please complete the required selections.",
+    "pleaseAddCallNumber" : "Please add a call device number."
   }
 }
